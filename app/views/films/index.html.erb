@@ -1,0 +1,47 @@
+<h1>Film Management Dashboard</h1>
+
+<a href="<%= root_path %>">Back to Home</a>
+
+<input type="text" id="film-search" placeholder="Search films...">
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Screening Date</th>
+      <th>Venue</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @films.each do |film| %>
+      <tr class="film-row">
+        <td class="film-title"><%= film.title %></td>
+        <td><%= film.screening_date %></td>
+        <td><%= film.venue %></td>
+        <td><%= film.status %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const searchInput = document.getElementById("film-search");
+
+  searchInput.addEventListener("keyup", function() {
+    const query = this.value.toLowerCase();
+
+    document.querySelectorAll(".film-row").forEach(function(row) {
+      const title = row.querySelector(".film-title").textContent.toLowerCase();
+      if (title.includes(query)) {
+        row.style.display = "";
+      } 
+      else {
+        row.style.display = "none";
+      }
+    });
+  });
+});
+</script>
+

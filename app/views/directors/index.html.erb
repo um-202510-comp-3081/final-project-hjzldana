@@ -1,0 +1,69 @@
+<h1>Director Management Dashboard</h1>
+
+<a href="<%= root_path %>">Back to Home</a>
+
+<label for="nationality-filter">Filter by Nationality:</label>
+<select id="nationality-filter">
+  <option value="All">All</option>
+  <% @directors.map(&:nationality).uniq.each do |nat| %>
+    <option value="<%= nat %>"><%= nat %></option>
+  <% end %>
+</select>
+
+<label for="status-filter">Filter by Status:</label>
+<select id="status-filter">
+  <option value="All">All</option>
+  <option value="First-time">First-time</option>
+  <option value="Returning">Returning</option>
+</select>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Nationality</th>
+      <th>Filmography Count</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @directors.each do |director| %>
+      <tr class="director-row">
+        <td><%= director.name %></td>
+        <td class="director-nationality"><%= director.nationality %></td>
+        <td><%= director.filmography_count %></td>
+        <td class="director-status"><%= director.status %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const nationalityFilter = document.getElementById("nationality-filter");
+  const statusFilter = document.getElementById("status-filter");
+
+  function filterDirectors() {
+    const natValue = nationalityFilter.value;
+    const statusValue = statusFilter.value;
+
+    document.querySelectorAll(".director-row").forEach(function(row) {
+      const nat = row.querySelector(".director-nationality").textContent;
+      const status = row.querySelector(".director-status").textContent;
+
+      const natMatch = (natValue === "All" || nat === natValue);
+      const statusMatch = (statusValue === "All" || status === statusValue);
+
+      if (natMatch && statusMatch) {
+        row.style.display = "";
+      } 
+      else {
+        row.style.display = "none";
+      }
+    });
+  }
+
+  nationalityFilter.addEventListener("change", filterDirectors);
+  statusFilter.addEventListener("change", filterDirectors);
+});
+</script>
