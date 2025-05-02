@@ -29,7 +29,6 @@ h1 {
     color: #ff4d4d;
     text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.5), 0 0 10px rgba(255, 0, 0, 0.3);
     position: relative;
-    display: inline-block;
     padding-bottom: 0.5rem;
   }
   

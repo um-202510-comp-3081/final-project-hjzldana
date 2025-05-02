@@ -1,6 +1,5 @@
 <h1>Director Management Dashboard</h1>
 
-<a class="back-link" href="<%= root_path %>">Back to Home</a>
 
 <label for="nationality-filter">Filter by Nationality:</label>
 <select id="nationality-filter">
@@ -37,6 +36,7 @@
     <% end %>
   </tbody>
 </table>
+<a class="back-link" href="<%= root_path %>">Back to Home</a>
 
 <script>
 document.addEventListener("turbo:load", function() {
