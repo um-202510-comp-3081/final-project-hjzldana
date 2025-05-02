@@ -1,6 +1,6 @@
 <h1>Film Management Dashboard</h1>
 
-<a href="<%= root_path %>">Back to Home</a>
+<a class="back-link" href="<%= root_path %>">Back to Home</a>
 
 <input type="text" id="film-search" placeholder="Search films...">
 
@@ -26,22 +26,31 @@
 </table>
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("turbo:load", function() {
+  console.log("Film page script loaded");
+
   const searchInput = document.getElementById("film-search");
+  console.log("Search input:", searchInput);
+  if (searchInput) {
+    searchInput.addEventListener("keyup", function() {
+      const query = this.value.toLowerCase();
+      console.log("Keyup detected, query:", query);
 
-  searchInput.addEventListener("keyup", function() {
-    const query = this.value.toLowerCase();
+      const rows = document.querySelectorAll(".film-row");
+      console.log("Found rows:", rows.length);
 
-    document.querySelectorAll(".film-row").forEach(function(row) {
-      const title = row.querySelector(".film-title").textContent.toLowerCase();
-      if (title.includes(query)) {
-        row.style.display = "";
-      } 
-      else {
-        row.style.display = "none";
-      }
+      rows.forEach(function(row) {
+        const titleCell = row.querySelector(".film-title");
+        console.log("Row title:", titleCell.textContent);
+        const title = titleCell.textContent.toLowerCase();
+        if (title.includes(query)) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
     });
-  });
+  }
 });
 </script>
 

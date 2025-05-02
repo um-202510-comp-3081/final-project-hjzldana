@@ -1,6 +1,6 @@
 <h1>Director Management Dashboard</h1>
 
-<a href="<%= root_path %>">Back to Home</a>
+<a class="back-link" href="<%= root_path %>">Back to Home</a>
 
 <label for="nationality-filter">Filter by Nationality:</label>
 <select id="nationality-filter">
@@ -39,31 +39,42 @@
 </table>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("turbo:load", function() {
+  console.log("Directors page script loaded");
+
   const nationalityFilter = document.getElementById("nationality-filter");
   const statusFilter = document.getElementById("status-filter");
+
+  console.log("Nationality filter:", nationalityFilter);
+  console.log("Status filter:", statusFilter);
 
   function filterDirectors() {
     const natValue = nationalityFilter.value;
     const statusValue = statusFilter.value;
 
-    document.querySelectorAll(".director-row").forEach(function(row) {
-      const nat = row.querySelector(".director-nationality").textContent;
-      const status = row.querySelector(".director-status").textContent;
+    console.log("Filter values - Nationality:", natValue, "Status:", statusValue);
 
-      const natMatch = (natValue === "All" || nat === natValue);
-      const statusMatch = (statusValue === "All" || status === statusValue);
+    const rows = document.querySelectorAll(".director-row");
+    console.log("Found director rows:", rows.length);
+
+    rows.forEach(function(row) {
+      const natCell = row.querySelector(".director-nationality");
+      const statusCell = row.querySelector(".director-status");
+
+      console.log("Row - Nationality:", natCell.textContent, "Status:", statusCell.textContent);
+
+      const natMatch = (natValue === "All" || natCell.textContent === natValue);
+      const statusMatch = (statusValue === "All" || statusCell.textContent === statusValue);
 
       if (natMatch && statusMatch) {
         row.style.display = "";
-      } 
-      else {
+      } else {
         row.style.display = "none";
       }
     });
   }
 
-  nationalityFilter.addEventListener("change", filterDirectors);
-  statusFilter.addEventListener("change", filterDirectors);
+  if (nationalityFilter) nationalityFilter.addEventListener("change", filterDirectors);
+  if (statusFilter) statusFilter.addEventListener("change", filterDirectors);
 });
 </script>
